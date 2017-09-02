@@ -7,7 +7,7 @@ const helpers = require('./helpers');
 
 
 /**
- * Provides helper functions and meta descriptions for embedded configs.
+ * Nested configuration wrapper.
  * @param config {object} - current configuration (leave empty {} if you want all current values to equal defaults)
  * @param defaults {object} - default configuration
  * @constructor
@@ -28,7 +28,7 @@ function Config(config, defaults) {
  * Note that target property can be undefined if it is a new property for target.
  * @returns {Config} resulting config (reference to this)
  */
-Config.prototype.add = function (config, defaults = {}, options) {
+Config.prototype.add = function (config, defaults = {}, options = {}) {
     if(options && options.mutate === false) delete options.mutate;  // we always need to mutate this in next step
     helpers.mergeDeep(this, defaults, config, options || {});
     helpers.mergeDeep(this._defaults, defaults, options || {});

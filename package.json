@@ -1,6 +1,6 @@
 {
   "name": "nested-config",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "description": "Manage and merge nested configuration objects, keeping track of your defaults",
   "main": "index.js",
   "scripts": {
@@ -24,8 +24,7 @@
     "url": "https://github.com/roman-spiridonov/yargs-config/issues"
   },
   "homepage": "https://github.com/roman-spiridonov/yargs-config#readme",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "chai": "^4.1.1",
     "eslint": "^4.5.0",

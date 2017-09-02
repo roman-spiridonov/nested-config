@@ -9,17 +9,16 @@ Features:
 * Plays nicely with [nconf](https://github.com/indexzero/nconf) (see recipe below)
 * See [yargs-config](https://github.com/roman-spiridonov/yargs-config) to start yargs CLI application from the config
 
-# JSDoc
-API docs are available on the [wiki](../../wiki).
-
 # Usage
+Create new config object using **create(overrides _[object]_, defaults _[object]_)**.
+
 ```javascript
-const Config = require('nested-config').Config;
-let config = new Config({a: 'new value'}, {a: 'default value'});
+const nc = require('nested-config');
+let config = nc.create({a: 'new value'}, {a: 'default value'});
 ```
 
 Now `config` is itself a configuration object. All your current settings are stored in it.
-It keeps track of default options for you as well.
+It keeps track of default options for you as well. The object has the following [API](../../wiki).
 
 ```javascript
 config.a;  // 'new value'
@@ -32,7 +31,7 @@ config.getDefault('b');  // 0
 
 ## Initialize with your default settings
 ```javascript
-const Config = require('nested-config').Config;
+const nc = require('nested-config');
 
 let defaults = {
     yourOption: 1,
@@ -42,7 +41,7 @@ let defaults = {
     }
 };
 
-let config = new Config({yourOption: 2}, defaults);
+let config = nc.create({yourOption: 2}, defaults);
 config.yourOption;  // 2
 config.nested.array; // [1] (default)
 ```
@@ -84,9 +83,9 @@ config.nested.array;  // [2, 3]
 Prepare `nconf` wrapper:
 ```javascript
 const nconf = require('nconf');
-const Config = require('./config').Config;
+const nc = require('./config');
 
-let defaultConfig = new Config({}, {some: "config"});
+let defaultConfig = nc.create({}, {some: "config"});
 
 nconf
   .env()
@@ -105,7 +104,7 @@ The module exports two useful functions which it uses internally: `mergeDeep()` 
 See [API docs](../../wiki) for more information.
 
 ```javascript
-const config = require('config-yargs');
+const nc = require('nested-config');
 
 let obj1 = {
     a: 1,
@@ -122,7 +121,7 @@ let obj2 = {
     }
 };
 
-config.mergeDeep(obj1, obj2, {arrayBehavior: 1});
+nc.mergeDeep(obj1, obj2, {arrayBehavior: 1});
 /* obj1:
 { 
     a: 2, 
@@ -133,7 +132,7 @@ config.mergeDeep(obj1, obj2, {arrayBehavior: 1});
 }
 */
 
-let obj3 = config.plainify(obj2);
+let obj3 = nc.plainify(obj2);
 /* obj3:
 {
     a: 2, 
@@ -142,3 +141,7 @@ let obj3 = config.plainify(obj2);
 }
 */
 ```
+
+# JSDoc
+API docs are available on the [wiki](../../wiki).
+

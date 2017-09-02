@@ -7,5 +7,8 @@ const Config = require('./config').Config;
 const helpers = require('./helpers');
 
 exports.Config = Config;
+exports.create = function (overrides, defaults) {
+    return new Config(overrides, defaults);
+};
 exports.mergeDeep = helpers.mergeDeep;
 exports.plainify = helpers.plainify;

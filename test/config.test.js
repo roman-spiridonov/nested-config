@@ -10,9 +10,7 @@ const
 
 let
     // Project modules
-    Config = require('../index').Config,
-    mergeDeep = require('../index').mergeDeep,
-    plainify = require('../index').plainify;
+    nc = require('../index');
 
 describe("Config", function() {
     let overrides = {};
@@ -41,7 +39,7 @@ describe("Config", function() {
 
     describe("Construction and initialization", function() {
         it("creates new config properly using constructor", function() {
-            let config = new Config(
+            let config = nc.create(
               {
                   port: 8080,
                   formula: {
@@ -69,7 +67,7 @@ describe("Config", function() {
     describe("add", function() {
         it("deeply extends config object with new options, overriding old values with new ones", function() {
             it("creates new config properly", function() {
-                let config = new Config({}, defaults);
+                let config = nc.create({}, defaults);
                 config.add(overrides);
 
                 expect(config.port).to.equal(8080);
@@ -83,7 +81,7 @@ describe("Config", function() {
         });
 
         it("supports merge options", function() {
-            let config = new Config({}, defaults);
+            let config = nc.create({}, defaults);
             config.add({nested: {nested: {array: [3]}}}, {}, {arrayBehavior: 1});
             expect(config.nested.nested.array).to.eql([1, 2, 3]);
         });
@@ -91,7 +89,7 @@ describe("Config", function() {
 
     describe("getPropRef", function() {
         it("returns target if the first parameter is null or empty string", function() {
-            let config = new Config(overrides, defaults);
+            let config = nc.create(overrides, defaults);
             expect(config.getPropRef(null)).to.equal(config);
             expect(config.getPropRef('')).to.equal(config);
             let obj = {test: 'this'};
@@ -99,7 +97,7 @@ describe("Config", function() {
         });
 
         it("returns correct property based on reference string", function() {
-            let config = new Config(overrides, defaults);
+            let config = nc.create(overrides, defaults);
             expect(config.getPropRef('nested.foo')).to.equal('bar');
             expect(config.getPropRef('nested', config.meta)).to.be.an('object')
             .that.eql(defaults.meta.nested);
@@ -109,7 +107,7 @@ describe("Config", function() {
 
     describe("README.md test", function() {
         it("basic usage works", function() {
-            let config = new Config({a: 'new value'}, {a: 'default value'});
+            let config = nc.create({a: 'new value'}, {a: 'default value'});
             expect(config.a).to.equal('new value');  // 'new value'
             expect(config.getDefault('a')).to.equal('default value');  // 'default value'
 
@@ -127,7 +125,7 @@ describe("Config", function() {
                 }
             };
 
-            let config = new Config({yourOption: 2}, defaults);
+            let config = nc.create({yourOption: 2}, defaults);
             expect(config.yourOption).to.equal(2);  // 2
             expect(config.nested.array).to.eql([1]); // [1] (default)
 
@@ -168,7 +166,7 @@ describe("Config", function() {
                 }
             };
 
-            mergeDeep(obj1, obj2, {arrayBehavior: 1});
+            nc.mergeDeep(obj1, obj2, {arrayBehavior: 1});
             expect(obj1).to.eql({
                 a: 2,
                 nested: {
@@ -177,7 +175,7 @@ describe("Config", function() {
                 }
             });
 
-            let obj3 = plainify(obj2);
+            let obj3 = nc.plainify(obj2);
             expect(obj3).to.eql({
                 a: 2,
                 'nested.arr': [3],
@@ -190,7 +188,7 @@ describe("Config", function() {
     describe("Bug fixes", function() {
         it("does not have side effects when mutating defaults", function() {
             const defaults = {array: [[1, 2]]};
-            let config = new Config(defaults, defaults);
+            let config = nc.create(defaults, defaults);
             config.array.push([3]);
             expect(config.array).to.eql([[1, 2], [3]]);
             expect(config._defaults.array).to.eql([[1, 2]]);
