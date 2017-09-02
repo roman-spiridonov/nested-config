@@ -1,0 +1,38 @@
+{
+  "name": "nested-config",
+  "version": "0.0.1",
+  "description": "Manage and merge nested configuration objects, keeping track of your defaults",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "eslint": "eslint ./"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roman-spiridonov/yargs-config.git"
+  },
+  "keywords": [
+    "nested",
+    "config",
+    "configuration",
+    "deep merge",
+    "merge"
+  ],
+  "author": "Roman Spiridonov <romars@phystech.edu>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/roman-spiridonov/yargs-config/issues"
+  },
+  "homepage": "https://github.com/roman-spiridonov/yargs-config#readme",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "chai": "^4.1.1",
+    "eslint": "^4.5.0",
+    "mocha": "^3.5.0",
+    "sinon": "^3.2.1"
+  },
+  "directories": {
+    "test": "test"
+  }
+}
